@@ -45,14 +45,38 @@ export function formatPercent(ratio: number, decimals = 1): string {
   return `${formatNumber(ratio * 100, decimals)}${NBSP}%`;
 }
 
+export function formatSignedPercent(ratio: number, decimals = 1): string {
+  return `${formatSignedNumber(ratio * 100, decimals)}${NBSP}%`;
+}
+
 export function formatLogDate(date: Date): string {
   return `${date.getUTCDate()}. ${MONTHS[date.getUTCMonth()]}`;
 }
 
-export function formatLogDateTime(date: Date): string {
+export function formatClock(date: Date): string {
   const hh = String(date.getUTCHours()).padStart(2, "0");
   const mm = String(date.getUTCMinutes()).padStart(2, "0");
-  return `${formatLogDate(date)} ${hh}:${mm}`;
+  return `${hh}:${mm}`;
+}
+
+export function formatLogDateTime(date: Date): string {
+  return `${formatLogDate(date)} ${formatClock(date)}`;
+}
+
+const WEEKDAYS = ["søndag", "mandag", "tirsdag", "onsdag", "torsdag", "fredag", "lørdag"];
+
+const MONTHS_SHORT = ["jan.", "feb.", "mars", "apr.", "mai", "juni", "juli", "aug.", "sep.", "okt.", "nov.", "des."];
+
+export function formatResultDay(date: Date): string {
+  const day = WEEKDAYS[date.getUTCDay()].toUpperCase();
+  const month = MONTHS_SHORT[date.getUTCMonth()].toUpperCase();
+  return `${day} ${date.getUTCDate()}. ${month}`;
+}
+
+export function formatPrice(value: number): string {
+  const rounded = Number(value.toFixed(2));
+  if (Math.abs(value - rounded) < 1e-8) return formatNumber(value, 2);
+  return formatNumber(value, 5);
 }
 
 export function monthLabel(date: Date): string {

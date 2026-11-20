@@ -1,6 +1,6 @@
 # kold
 
-kold er en personlig oversikt for egne gullhandler. Appen leser CSV-loggen fra Expert Advisor på din maskin og viser resultat, handler, treffprosent, grunner til at et oppsett ble hoppet over, og sendefeil.
+kold er en personlig oversikt for egne gullhandler. Appen leser CSV-loggen fra Expert Advisor på din maskin. Oversikt viser resultat, boter og åpne posisjoner. Historikk viser treffprosent, grunner til at et oppsett ble hoppet over, sendefeil og lukkede handler.
 
 Versjon 1 er kun til eget bruk. kold logger ikke inn hos megler, lagrer ikke passord og sender ingen ordre. Den leser bare.
 
@@ -22,7 +22,7 @@ pnpm test
 pnpm build
 ```
 
-Lys og mørk drakt følger systemet. I toppen kan du velge System, Lys eller Mørk.
+Oversikt følger den lyse drakten. Fornavnet i hilsenen står i `src/config/oversikt.ts` og er Dusan som standard.
 
 ## Logg fra MT4
 

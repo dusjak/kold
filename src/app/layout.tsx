@@ -23,19 +23,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-const themeBoot = `(function(){try{var m=localStorage.getItem("kold-theme");var t=m==="light"||m==="dark"?m:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");var e=document.documentElement;e.setAttribute("data-theme",t);e.setAttribute("data-theme-mode",m==="light"||m==="dark"?m:"system");}catch(err){document.documentElement.setAttribute("data-theme","light");}})();`;
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html
-      lang="nb"
-      data-theme="light"
-      className={`${instrument.variable} ${plex.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
-      </head>
+    <html lang="nb" className={`${instrument.variable} ${plex.variable}`}>
       <body>{children}</body>
     </html>
   );

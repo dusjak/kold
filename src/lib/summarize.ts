@@ -10,6 +10,8 @@ export type Trade = {
   closeTime: Date | null;
   closePrice: number | null;
   profit: number | null;
+  sl: number | null;
+  tp: number | null;
   comment: string;
   magic: number | null;
   status: "open" | "closed";
@@ -121,6 +123,8 @@ function newTrade(row: LogRow, status: "open" | "closed"): Trade {
     closeTime: status === "closed" ? row.time : null,
     closePrice: status === "closed" ? row.price : null,
     profit: status === "closed" ? row.profit : null,
+    sl: row.sl,
+    tp: row.tp,
     comment: row.comment,
     magic: row.magic,
     status,
@@ -159,6 +163,8 @@ export function summarize(rows: LogRow[]): Summary {
       trade.profit = row.profit;
       if (!trade.side && row.side) trade.side = normalizeSide(row.side);
       if (trade.volume == null) trade.volume = row.volume;
+      if (trade.sl == null) trade.sl = row.sl;
+      if (trade.tp == null) trade.tp = row.tp;
     }
     if (row.ticket) openByTicket.set(row.ticket, trade);
   }
