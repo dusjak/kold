@@ -17,8 +17,8 @@ import {
 import {
   buildBots,
   buildPositions,
-  heroSentence,
   heroState,
+  heroStatus,
   openResult,
   runningLabel,
   type BotView,
@@ -45,10 +45,14 @@ export function Oversikt() {
   const positions = useMemo(() => buildPositions(log.summary), [log.summary]);
   const points = useMemo(() => seriesInRange(log.summary.pnlSeries, anchor, range), [log.summary, anchor, range]);
   const pnl = points.reduce((sum, point) => sum + point.profit, 0);
-  const state = heroState(pnl, range === "1d" ? oversiktConfig : { ...oversiktConfig, dagsgrenseKr: null });
   const periode = PERIODER.find((item) => item.id === range) ?? PERIODER[0];
   const reference = oversiktConfig.referanseKontoKr;
   const konto = reference == null ? null : reference + log.summary.pnl;
+  const dayConfig = range === "1d" ? oversiktConfig : { ...oversiktConfig, dagsgrenseKr: null };
+  const state = heroState(pnl, dayConfig, konto);
+  const brokeAmount = konto == null ? null : formatNumber(konto, 2);
+  const amount = state === "broke" ? brokeAmount : formatSignedNumber(pnl, 2);
+  const subline = cardSubline(state, pnl, dayConfig.dagsgrenseKr, reference);
   const openPnl = openResult(positions);
 
   return (
@@ -75,26 +79,34 @@ export function Oversikt() {
       </header>
 
       <section className="hero" data-state={state} aria-label="Resultat">
-        <div className="hero-kyst" />
-        <div className="hero-korn" />
-        <div className="hero-korn-mork" />
+        <div className="hero-tekstur" />
+        <div className="hero-tekstur-mork" />
         <div className="hero-fakta">
-          <p className="etikett hero-oye">
-            {range === "1d" ? `RESULTAT I DAG · ${formatResultDay(anchor)}` : `RESULTAT · ${periode.tekst}`}
+          <p className="hero-oye">
+            {state === "broke"
+              ? "SALDO"
+              : range === "1d"
+                ? `RESULTAT I DAG · ${formatResultDay(anchor)}`
+                : `RESULTAT · ${periode.tekst}`}
           </p>
           <div className="hero-tall">
-            <span className="tall-portefolje">{formatSignedNumber(pnl, 2)}</span>
-            <span className="hero-kr">kr</span>
+            <span className="hero-belop">{amount ?? "Mangler"}</span>
+            {amount != null ? <span className="hero-kr">kr</span> : null}
           </div>
-          <p className="hero-sub tall-sm">
-            {heroSubline(pnl, range === "1d" ? oversiktConfig.dagsgrenseKr : null, reference)}
-          </p>
-          <p className="hero-setning">{heroSentence(bots)}</p>
+          {subline ? <p className="hero-sub">{subline}</p> : null}
+          <p className="hero-status">{heroStatus(state, bots)}</p>
+          {state === "megaloss" ? (
+            <button type="button" className="hero-stopp" disabled aria-disabled="true">
+              ■  Stopp alt
+            </button>
+          ) : null}
         </div>
         <div className="hero-graf">
-          <div className="tegnforklaring etikett">
+          <div className="tegnforklaring">
             <span className="strek" />
             Portefølje
+            <span className="strek ref" />
+            OSEBX
           </div>
           <div className="plot">
             <HeroChart points={points} />
@@ -102,12 +114,12 @@ export function Oversikt() {
         </div>
         <div className="hero-side">
           <div className="hero-par">
-            <span className="etikett hero-oye">Kontoverdi</span>
-            <span className="tall-md">{konto == null ? "Mangler" : formatMoney(konto, false)}</span>
+            <span className="hero-label">Kontoverdi</span>
+            <span className="hero-konto">{konto == null ? "Mangler" : formatMoney(konto, false)}</span>
           </div>
           <div className="hero-par">
-            <span className="etikett hero-oye">Siden start</span>
-            <span className="tall-md">{formatMoney(log.summary.pnl)}</span>
+            <span className="hero-label">Siden start</span>
+            <span className="hero-konto">{formatMoney(log.summary.pnl)}</span>
           </div>
           <div className="periode" role="group" aria-label="Periode">
             {PERIODER.map((item) => (
@@ -166,10 +178,13 @@ export function Oversikt() {
   );
 }
 
-function heroSubline(pnl: number, limit: number | null, reference: number | null): string {
+function cardSubline(state: ReturnType<typeof heroState>, pnl: number, limit: number | null, reference: number | null): string {
+  if (state === "broke") return "Ingen margin til neste handel";
   const parts: string[] = [];
   if (reference != null && reference !== 0) parts.push(formatSignedPercent(pnl / reference, 2));
-  if (limit != null && limit !== 0) parts.push(`${formatPercent(pnl / limit, 0)} av dagens grense`);
+  if (limit != null && limit !== 0) {
+    parts.push(state === "megaloss" ? "over dagens grense" : `${formatPercent(Math.abs(pnl) / limit, 0)} av dagens grense`);
+  }
   return parts.join(" · ");
 }
 

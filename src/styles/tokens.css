@@ -402,6 +402,7 @@
     --kold-result-broke-text-subdued: var(--kold-color-paper-300);
     --kold-result-broke-graph: var(--kold-color-paper-250);
     --kold-result-broke-reference: var(--kold-color-paper-400);
+    --kold-result-dark-texture-opacity: 1;
     color-scheme: dark;
   }
 }

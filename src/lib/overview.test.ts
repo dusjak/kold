@@ -19,6 +19,10 @@ describe("oversikt", () => {
     expect(heroState(300, oversiktConfig)).toBe("gain");
     expect(heroState(-400, oversiktConfig)).toBe("loss");
     expect(heroState(-2000, oversiktConfig)).toBe("megaloss");
+    expect(heroState(300, oversiktConfig, null)).toBe("gain");
+    expect(heroState(300, oversiktConfig, 0)).toBe("broke");
+    expect(heroState(-2000, oversiktConfig, -1)).toBe("broke");
+    expect(heroState(-2000, oversiktConfig, 1)).toBe("megaloss");
   });
 
   it("bygger boter og åpne posisjoner fra loggen", () => {
