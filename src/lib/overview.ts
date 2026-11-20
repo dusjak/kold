@@ -36,7 +36,8 @@ export type PositionView = {
   profit: number | null;
 };
 
-export function heroState(pnl: number, config: OversiktConfig): HeroState {
+export function heroState(pnl: number, config: OversiktConfig, accountBalance: number | null = null): HeroState {
+  if (accountBalance != null && accountBalance <= config.brokeSaldoMaksKr) return "broke";
   const limit = config.dagsgrenseKr;
   if (limit == null || limit === 0) {
     if (pnl > 0) return "gain";
@@ -169,12 +170,16 @@ export function runningLabel(bots: BotView[]): string {
   return `${running} av ${total} kjører`;
 }
 
-export function heroSentence(bots: BotView[]): string {
+export function heroStatus(state: HeroState, bots: BotView[]): string {
+  if (state === "broke") return "Ingenting igjen å trade for.";
+  if (state === "megaloss") return "Vi foreslår å stoppe boten.";
+  if (state === "loss") return "Innenfor tapsgrensen. Planen står.";
+  if (state === "stable") return "Dagen holder seg innenfor rammen.";
   const total = bots.length;
   const running = bots.filter((bot) => bot.status !== "pause").length;
   if (total === 0) return "Ingen boter i loggen.";
-  if (running === 1 && total === 1) return "1 bot handler nå.";
-  return `${running} av ${total} boter handler nå.`;
+  if (running === 1 && total === 1) return "1 bot handler nå. Du holder planen.";
+  return `${running} av ${total} boter handler nå. Du holder planen.`;
 }
 
 export function periodPnl(summary: Summary, anchor: Date, rangeMs: number): number {

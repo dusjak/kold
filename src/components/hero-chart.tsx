@@ -3,27 +3,9 @@
 import { oversiktConfig } from "@/config/oversikt";
 import type { PnlPoint } from "@/lib/summarize";
 
-const W = 760;
-const H = 220;
-const PAD_L = 4;
-const PAD_R = 8;
-const PAD_T = 12;
-const PAD_B = 8;
-
-function axis(values: number[]) {
-  const lo = Math.min(0, ...values);
-  const hi = Math.max(0, ...values);
-  const span = hi - lo || 1;
-  const rough = span / 3;
-  const mag = 10 ** Math.floor(Math.log10(Math.abs(rough) || 1));
-  const normalized = rough / mag;
-  const step = normalized <= 1 ? mag : normalized <= 2 ? 2 * mag : normalized <= 5 ? 5 * mag : 10 * mag;
-  const min = Math.floor(lo / step) * step;
-  const max = Math.max(Math.ceil((hi === 0 ? step : hi) / step) * step, min + step);
-  const count = Math.max(1, Math.round((max - min) / step));
-  const ticks = Array.from({ length: count + 1 }, (_, index) => Math.round((min + index * step) * 1e6) / 1e6);
-  return { min, max, ticks };
-}
+const W = 600;
+const H = 180;
+const PAD = 6;
 
 export function HeroChart({ points }: { points: PnlPoint[] }) {
   const reference = oversiktConfig.referanseKontoKr;
@@ -37,28 +19,23 @@ export function HeroChart({ points }: { points: PnlPoint[] }) {
     return <p className="tom">Ingen lukkede handler i dette intervallet.</p>;
   }
 
-  const scale = axis(series.map((point) => point.value));
+  const values = series.map((point) => point.value);
+  const lo = Math.min(...values);
+  const hi = Math.max(...values);
+  const span = hi - lo || 1;
+  const min = lo - span * 0.12;
+  const max = hi + span * 0.12;
   const t0 = series[0].time.getTime();
   const t1 = series[series.length - 1].time.getTime();
-  const plotW = W - PAD_L - PAD_R;
-  const plotH = H - PAD_T - PAD_B;
-  const xFor = (time: number) => (t1 === t0 ? PAD_L + plotW / 2 : PAD_L + ((time - t0) / (t1 - t0)) * plotW);
-  const yFor = (value: number) => PAD_T + ((scale.max - value) / (scale.max - scale.min || 1)) * plotH;
+  const plotW = W - PAD * 2;
+  const plotH = H - PAD * 2;
+  const xFor = (time: number) => (t1 === t0 ? W / 2 : PAD + ((time - t0) / (t1 - t0)) * plotW);
+  const yFor = (value: number) => PAD + ((max - value) / (max - min)) * plotH;
   const line = series.map((point) => `${xFor(point.time.getTime()).toFixed(1)},${yFor(point.value).toFixed(1)}`).join(" ");
-  const last = series[series.length - 1];
 
   return (
     <svg className="plot-svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Utvikling">
-      {scale.ticks.map((tick) => {
-        const y = yFor(tick);
-        return (
-          <g key={tick}>
-            <line x1={PAD_L} x2={W - PAD_R} y1={y} y2={y} stroke="var(--result-graph)" strokeOpacity="0.16" strokeWidth="1" />
-          </g>
-        );
-      })}
-      <polyline points={line} fill="none" stroke="var(--result-graph)" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
-      <circle cx={xFor(last.time.getTime())} cy={yFor(last.value)} r="3.5" fill="var(--result-graph)" />
+      <polyline points={line} fill="none" stroke="var(--result-graph)" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   );
 }

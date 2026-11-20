@@ -16,6 +16,12 @@ export const oversiktConfig = {
   /** Megatap når dagens resultat er minst så lavt, som andel av L. */
   megatapAndel: -0.75,
   /**
+   * MIDLERTIDIG. Eieren har ikke vedtatt når kortet skal være Broke.
+   * Inntil videre: Broke når kontosaldo er mindre enn eller lik dette.
+   * Ukjent saldo (referanseKontoKr er null) utløser ikke Broke.
+   */
+  brokeSaldoMaksKr: 0,
+  /**
    * Valgfri referanse for prosent i grafen.
    * Null betyr at aksen viser kroner, ikke en oppdiktet prosent.
    */
