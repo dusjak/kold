@@ -3,7 +3,7 @@ import { formatPercent, instrumentName } from "./format";
 import type { LogRow } from "./parse-log";
 import { eventName, type Summary, type Trade } from "./summarize";
 
-export type HeroState = "stabil" | "gevinst" | "tap" | "megatap";
+export type HeroState = "stable" | "gain" | "loss" | "megaloss" | "broke";
 
 export type BotStatus = "kjorer" | "naer" | "pause";
 
@@ -39,15 +39,15 @@ export type PositionView = {
 export function heroState(pnl: number, config: OversiktConfig): HeroState {
   const limit = config.dagsgrenseKr;
   if (limit == null || limit === 0) {
-    if (pnl > 0) return "gevinst";
-    if (pnl < 0) return "tap";
-    return "stabil";
+    if (pnl > 0) return "gain";
+    if (pnl < 0) return "loss";
+    return "stable";
   }
   const ratio = pnl / limit;
-  if (ratio >= config.gevinstAndel) return "gevinst";
-  if (ratio <= config.megatapAndel) return "megatap";
-  if (ratio < -config.stabilAndel) return "tap";
-  return "stabil";
+  if (ratio >= config.gevinstAndel) return "gain";
+  if (ratio <= config.megatapAndel) return "megaloss";
+  if (ratio < -config.stabilAndel) return "loss";
+  return "stable";
 }
 
 function utcDay(date: Date): string {

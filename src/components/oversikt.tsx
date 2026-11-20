@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { oversiktConfig } from "@/config/oversikt";
 import {
@@ -75,55 +74,53 @@ export function Oversikt() {
         </div>
       </header>
 
-      <section className="hero" data-tilstand={state} aria-label="Resultat">
+      <section className="hero" data-state={state} aria-label="Resultat">
+        <div className="hero-kyst" />
         <div className="hero-korn" />
+        <div className="hero-korn-mork" />
         <div className="hero-fakta">
-          <div>
-            <p className="etikett">
-              {range === "1d" ? `RESULTAT I DAG · ${formatResultDay(anchor)}` : `RESULTAT · ${periode.tekst}`}
-            </p>
-            <div className="hero-tall">
-              <span className="tall-portefolje">{formatSignedNumber(pnl, 2)}</span>
-              <span className="hero-kr">kr</span>
-            </div>
-            <p className="hero-sub tall-sm">
-              {heroSubline(pnl, range === "1d" ? oversiktConfig.dagsgrenseKr : null, reference)}
-            </p>
-            <p className="hero-setning">{heroSentence(bots)}</p>
+          <p className="etikett hero-oye">
+            {range === "1d" ? `RESULTAT I DAG · ${formatResultDay(anchor)}` : `RESULTAT · ${periode.tekst}`}
+          </p>
+          <div className="hero-tall">
+            <span className="tall-portefolje">{formatSignedNumber(pnl, 2)}</span>
+            <span className="hero-kr">kr</span>
           </div>
-          <div className="hero-bunn">
-            <div className="hero-par">
-              <span className="etikett">Kontoverdi</span>
-              <span className="tall-md">{konto == null ? "Mangler" : formatMoney(konto, false)}</span>
-            </div>
-            <div className="hero-par">
-              <span className="etikett">Siden start</span>
-              <span className="tall-md">{formatMoney(log.summary.pnl)}</span>
-            </div>
-          </div>
+          <p className="hero-sub tall-sm">
+            {heroSubline(pnl, range === "1d" ? oversiktConfig.dagsgrenseKr : null, reference)}
+          </p>
+          <p className="hero-setning">{heroSentence(bots)}</p>
         </div>
         <div className="hero-graf">
-          <div className="hero-topp">
-            <div className="tegnforklaring etikett">
-              <span className="strek" />
-              Portefølje
-            </div>
-            <div className="periode" role="group" aria-label="Periode">
-              {PERIODER.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className={range === item.id ? "paa" : undefined}
-                  aria-pressed={range === item.id}
-                  onClick={() => setRange(item.id)}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
+          <div className="tegnforklaring etikett">
+            <span className="strek" />
+            Portefølje
           </div>
           <div className="plot">
             <HeroChart points={points} />
+          </div>
+        </div>
+        <div className="hero-side">
+          <div className="hero-par">
+            <span className="etikett hero-oye">Kontoverdi</span>
+            <span className="tall-md">{konto == null ? "Mangler" : formatMoney(konto, false)}</span>
+          </div>
+          <div className="hero-par">
+            <span className="etikett hero-oye">Siden start</span>
+            <span className="tall-md">{formatMoney(log.summary.pnl)}</span>
+          </div>
+          <div className="periode" role="group" aria-label="Periode">
+            {PERIODER.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={range === item.id ? "paa" : undefined}
+                aria-pressed={range === item.id}
+                onClick={() => setRange(item.id)}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -187,14 +184,7 @@ function BotKort({ bot }: { bot: BotView }) {
           <h3 className="bot-navn">{bot.name}</h3>
           <p className="body-sm dempet">{bot.market}</p>
         </div>
-        <Image
-          className="bryter"
-          alt=""
-          src={bot.status === "pause" ? "/ikon/bryter-av.svg" : "/ikon/bryter-paa.svg"}
-          width={44}
-          height={24}
-          unoptimized
-        />
+        <span className={bot.status === "pause" ? "bryter" : "bryter paa"} aria-hidden="true" />
       </div>
       <div className="bot-rad">
         <span className={`merke-status ${chipClass}`}>{bot.chip}</span>
@@ -228,7 +218,7 @@ function BotKort({ bot }: { bot: BotView }) {
           </div>
           <div className="bot-rad">
             <span className="etikett dempet">Dagsgrense</span>
-            <span className="etikett" style={{ color: "var(--tekst-2)" }}>
+            <span className="etikett" style={{ color: "var(--kold-text-subdued)" }}>
               {bot.status === "pause" || bot.limit == null
                 ? "Brukes ikke på pause"
                 : `${formatNumber(bot.usedKr, 0)} av ${formatNumber(bot.limit, 0)} kr`}

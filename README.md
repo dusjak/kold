@@ -22,7 +22,7 @@ pnpm test
 pnpm build
 ```
 
-Oversikt følger den lyse drakten. Fornavnet i hilsenen står i `src/config/oversikt.ts` og er Dusan som standard.
+Lys og mørk følger systemet. Fornavnet i hilsenen står i `src/config/oversikt.ts` og er Dusan som standard.
 
 ## Logg fra MT4
 

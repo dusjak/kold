@@ -15,10 +15,10 @@ describe("oversikt", () => {
   });
 
   it("velger resultatkort ut fra tersklene", () => {
-    expect(heroState(0, oversiktConfig)).toBe("stabil");
-    expect(heroState(300, oversiktConfig)).toBe("gevinst");
-    expect(heroState(-400, oversiktConfig)).toBe("tap");
-    expect(heroState(-2000, oversiktConfig)).toBe("megatap");
+    expect(heroState(0, oversiktConfig)).toBe("stable");
+    expect(heroState(300, oversiktConfig)).toBe("gain");
+    expect(heroState(-400, oversiktConfig)).toBe("loss");
+    expect(heroState(-2000, oversiktConfig)).toBe("megaloss");
   });
 
   it("bygger boter og åpne posisjoner fra loggen", () => {
