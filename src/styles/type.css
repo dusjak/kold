@@ -1,0 +1,235 @@
+/*
+  kold text + effect styles — Figma v0.2.2 (tokens v5).
+  Load after tokens.css. Color stays on --kold-*.
+  English names map the Figma styles: Tekst/* → .text-*, Tall/* → .num-*.
+  --t-* matches the CSS hints stored on the Figma text styles.
+  Effect styles are the seven Tekstur/F1 Kornfade grains. CSS cannot
+  reproduce Figma NOISE, so these are the grain colors only.
+*/
+
+:root {
+  --font-sans: var(--font-instrument), "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans-width: 100;
+
+  /* Tekst/display */
+  --text-display-size: 32px;
+  --text-display-line-height: 40px;
+  --text-display-weight: 600;
+  --t-display: 600 32px/40px var(--font-sans);
+
+  /* Tekst/H1 */
+  --text-h1-size: 24px;
+  --text-h1-line-height: 32px;
+  --text-h1-weight: 600;
+  --t-h1: 600 24px/32px var(--font-sans);
+
+  /* Tekst/H2 */
+  --text-h2-size: 17px;
+  --text-h2-line-height: 24px;
+  --text-h2-weight: 600;
+  --t-h2: 600 17px/24px var(--font-sans);
+
+  /* Tekst/H3 */
+  --text-h3-size: 15px;
+  --text-h3-line-height: 22px;
+  --text-h3-weight: 600;
+  --t-h3: 600 15px/22px var(--font-sans);
+
+  /* Tekst/body */
+  --text-body-size: 15px;
+  --text-body-line-height: 22px;
+  --text-body-weight: 400;
+  --t-body: 400 15px/22px var(--font-sans);
+
+  /* Tekst/body-sm — Figma hint --t-small */
+  --text-body-sm-size: 13px;
+  --text-body-sm-line-height: 18px;
+  --text-body-sm-weight: 400;
+  --t-small: 400 13px/18px var(--font-sans);
+  --t-body-sm: var(--t-small);
+
+  /* Tekst/etikett */
+  --text-label-size: 12px;
+  --text-label-line-height: 16px;
+  --text-label-weight: 500;
+  --t-label: 500 12px/16px var(--font-sans);
+
+  /* Tekst/knapp */
+  --text-button-size: 14px;
+  --text-button-line-height: 20px;
+  --text-button-weight: 600;
+  --t-button: 600 14px/20px var(--font-sans);
+
+  /* Tekst/knapp-stor */
+  --text-button-lg-size: 20px;
+  --text-button-lg-line-height: 28px;
+  --text-button-lg-weight: 600;
+  --t-button-lg: 600 20px/28px var(--font-sans);
+
+  /* Tall/tall-stor */
+  --num-lg-size: 32px;
+  --num-lg-line-height: 40px;
+  --num-lg-weight: 600;
+  --t-num-lg: 600 32px/40px var(--font-mono);
+
+  /* Tall/tall */
+  --num-size: 15px;
+  --num-line-height: 20px;
+  --num-weight: 500;
+  --t-num: 500 15px/20px var(--font-mono);
+
+  /* Tall/tall-sm */
+  --num-sm-size: 12px;
+  --num-sm-line-height: 16px;
+  --num-sm-weight: 500;
+  --t-num-sm: 500 12px/16px var(--font-mono);
+
+  /* Tall/tabular */
+  --num-tabular-size: 15px;
+  --num-tabular-line-height: 22px;
+  --num-tabular-weight: 400;
+  --t-num-tabular: 400 15px/22px var(--font-mono);
+
+  /* Tall/portefølje — Instrument Sans, unused on the v0.2.2 Oversikt */
+  --num-portfolio-size: 56px;
+  --num-portfolio-line-height: 64px;
+  --num-portfolio-weight: 600;
+  --t-num-portfolio: 600 56px/64px var(--font-sans);
+
+  /* Tekstur/F1 Kornfade. Density 90%, noise size 0.9. Separate layer, not on type. */
+  --effect-grain-size: 0.9;
+  --effect-grain-density: 0.9;
+  --effect-grain-dark-alpha: 0.2;
+  --effect-grain-light-alpha: 0.12;
+  --effect-grain-default-dark: rgba(4, 102, 207, 0.2);
+  --effect-grain-default-light: rgba(149, 227, 255, 0.12);
+  --effect-grain-stable-dark: rgba(192, 188, 166, 0.2);
+  --effect-grain-stable-light: rgba(255, 255, 255, 0.12);
+  --effect-grain-gain-dark: rgba(9, 43, 32, 0.2);
+  --effect-grain-gain-light: rgba(115, 161, 130, 0.12);
+  --effect-grain-loss-dark: rgba(49, 18, 37, 0.2);
+  --effect-grain-loss-light: rgba(209, 149, 174, 0.12);
+  --effect-grain-megaloss-dark: rgba(56, 15, 0, 0.2);
+  --effect-grain-megaloss-light: rgba(243, 122, 62, 0.12);
+  --effect-grain-broke-light-dark: rgba(3, 1, 1, 0.2);
+  --effect-grain-broke-light-light: rgba(115, 92, 79, 0.12);
+  --effect-grain-broke-dark-dark: rgba(12, 4, 1, 0.2);
+  --effect-grain-broke-dark-light: rgba(145, 110, 90, 0.12);
+}
+
+.text-display,
+.text-h1,
+.text-h2,
+.text-h3,
+.text-body,
+.text-body-sm,
+.text-label,
+.text-button,
+.text-button-lg,
+.num-portfolio {
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-variation-settings: "wdth" var(--font-sans-width);
+  letter-spacing: 0;
+}
+
+.text-display {
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line-height);
+  font-weight: var(--text-display-weight);
+}
+
+.text-h1 {
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-line-height);
+  font-weight: var(--text-h1-weight);
+}
+
+.text-h2 {
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line-height);
+  font-weight: var(--text-h2-weight);
+}
+
+.text-h3 {
+  font-size: var(--text-h3-size);
+  line-height: var(--text-h3-line-height);
+  font-weight: var(--text-h3-weight);
+}
+
+.text-body {
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line-height);
+  font-weight: var(--text-body-weight);
+}
+
+.text-body-sm {
+  font-size: var(--text-body-sm-size);
+  line-height: var(--text-body-sm-line-height);
+  font-weight: var(--text-body-sm-weight);
+}
+
+.text-label {
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line-height);
+  font-weight: var(--text-label-weight);
+}
+
+.text-button {
+  font-size: var(--text-button-size);
+  line-height: var(--text-button-line-height);
+  font-weight: var(--text-button-weight);
+}
+
+.text-button-lg {
+  font-size: var(--text-button-lg-size);
+  line-height: var(--text-button-lg-line-height);
+  font-weight: var(--text-button-lg-weight);
+}
+
+.num-lg,
+.num,
+.num-sm,
+.num-tabular {
+  font-family: var(--font-mono);
+  font-style: normal;
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+.num-lg {
+  font-size: var(--num-lg-size);
+  line-height: var(--num-lg-line-height);
+  font-weight: var(--num-lg-weight);
+}
+
+.num {
+  font-size: var(--num-size);
+  line-height: var(--num-line-height);
+  font-weight: var(--num-weight);
+}
+
+.num-sm {
+  font-size: var(--num-sm-size);
+  line-height: var(--num-sm-line-height);
+  font-weight: var(--num-sm-weight);
+}
+
+.num-tabular {
+  font-size: var(--num-tabular-size);
+  line-height: var(--num-tabular-line-height);
+  font-weight: var(--num-tabular-weight);
+}
+
+.num-portfolio {
+  font-size: var(--num-portfolio-size);
+  line-height: var(--num-portfolio-line-height);
+  font-weight: var(--num-portfolio-weight);
+}
+
+/* Tall/* descriptions say right-aligned. Table columns opt in with this. */
+.num-end {
+  text-align: right;
+}

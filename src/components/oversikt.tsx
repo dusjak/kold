@@ -55,20 +55,20 @@ export function Oversikt() {
     <div className="hoved">
       <header className="topp">
         <div>
-          <h1 className="h1" suppressHydrationWarning>
+          <h1 className="text-h1" suppressHydrationWarning>
             {greeting(new Date())}, {oversiktConfig.fornavn}
           </h1>
           {log.readError || log.note ? <p className="hint">{log.readError ?? log.note}</p> : null}
         </div>
         <div className="topp-hoyre">
-          <span className="status etikett">
+          <span className="status text-label">
             <span className="prikk" />
             {log.label}
           </span>
           <span className="bjelle" aria-hidden="true">
             <Ikon navn="varsel" />
           </span>
-          <button type="button" className="knapp stopp" disabled aria-disabled="true">
+          <button type="button" className="knapp text-button stopp" disabled aria-disabled="true">
             ■  Stopp alt
           </button>
         </div>
@@ -128,10 +128,10 @@ export function Oversikt() {
       <section className="blokk">
         <div className="blokk-hode">
           <div className="blokk-tittel">
-            <h2 className="h2">Mine Boter</h2>
-            <p className="dempet">{runningLabel(bots)}</p>
+            <h2 className="text-h2">Mine Boter</h2>
+            <p className="text-body dempet">{runningLabel(bots)}</p>
           </div>
-          <button type="button" className="knapp primaer" disabled aria-disabled="true">
+          <button type="button" className="knapp text-button primaer" disabled aria-disabled="true">
             Kjøp flere boter
           </button>
         </div>
@@ -148,8 +148,8 @@ export function Oversikt() {
 
       <section className="blokk">
         <div className="pos-hode">
-          <h2 className="h2">Åpne posisjoner</h2>
-          <p className="body-sm">
+          <h2 className="text-h2">Åpne posisjoner</h2>
+          <p className="text-body-sm pos-oppsummering">
             Viser {positions.length} av {positions.length} åpne
             {openPnl == null ? null : (
               <>
@@ -181,14 +181,14 @@ function BotKort({ bot }: { bot: BotView }) {
     <article className={bot.status === "pause" ? "botkort pause" : "botkort"}>
       <div className="bot-topp">
         <div>
-          <h3 className="bot-navn">{bot.name}</h3>
-          <p className="body-sm dempet">{bot.market}</p>
+          <h3 className="bot-navn text-h3">{bot.name}</h3>
+          <p className="text-body-sm dempet">{bot.market}</p>
         </div>
         <span className={bot.status === "pause" ? "bryter" : "bryter paa"} aria-hidden="true" />
       </div>
       <div className="bot-rad">
-        <span className={`merke-status ${chipClass}`}>{bot.chip}</span>
-        <span className="body-sm dempet">
+        <span className={`merke-status text-label ${chipClass}`}>{bot.chip}</span>
+        <span className="text-body-sm dempet">
           {bot.status === "pause"
             ? bot.pausedSince
               ? `På pause siden ${formatClock(bot.pausedSince)}`
@@ -198,27 +198,27 @@ function BotKort({ bot }: { bot: BotView }) {
       </div>
       <div className="bot-tall">
         <div>
-          <span className="etikett dempet">I dag (kr)</span>
-          <span className={`tall-md ${todayTone === "gevinst" ? "gevinst" : todayTone === "tap" ? "tap" : "dempet"}`}>
+          <span className="text-label dempet">I dag (kr)</span>
+          <span className={`num ${todayTone === "gevinst" ? "gevinst" : todayTone === "tap" ? "tap" : "dempet"}`}>
             {formatSignedNumber(bot.todayPnl, 2)}
           </span>
         </div>
         <div>
-          <span className="etikett dempet">Totalt (kr)</span>
-          <span className="tall-md">{formatSignedNumber(bot.totalPnl, 2)}</span>
+          <span className="text-label dempet">Totalt (kr)</span>
+          <span className="num">{formatSignedNumber(bot.totalPnl, 2)}</span>
         </div>
         <Sparkline values={bot.spark} tone={tone === "dempet" ? "dempet" : tone} />
       </div>
       {bot.warning ? (
-        <p className="varsel">△   {bot.warning}</p>
+        <p className="varsel text-label">△   {bot.warning}</p>
       ) : (
         <div className="grense">
           <div className="spor" aria-hidden="true">
             <span style={{ width: bot.limit ? `${Math.min(100, (bot.usedKr / bot.limit) * 100)}%` : "0%" }} />
           </div>
           <div className="bot-rad">
-            <span className="etikett dempet">Dagsgrense</span>
-            <span className="etikett" style={{ color: "var(--kold-text-subdued)" }}>
+            <span className="text-label dempet">Dagsgrense</span>
+            <span className="text-label" style={{ color: "var(--kold-text-subdued)" }}>
               {bot.status === "pause" || bot.limit == null
                 ? "Brukes ikke på pause"
                 : `${formatNumber(bot.usedKr, 0)} av ${formatNumber(bot.limit, 0)} kr`}
@@ -237,15 +237,15 @@ export function Posisjonstabell({ positions }: { positions: PositionView[] }) {
         <caption className="fil">Åpne posisjoner</caption>
         <thead>
           <tr>
-            <th>Bot</th>
-            <th>Instrument</th>
-            <th>Retning</th>
-            <th className="tallkol">Størrelse (lot)</th>
-            <th className="tallkol">Inngang</th>
-            <th className="tallkol">Nå</th>
-            <th className="tallkol">Stop loss</th>
-            <th className="tallkol">Åpnet</th>
-            <th className="tallkol">Resultat (kr)</th>
+            <th className="text-label">Bot</th>
+            <th className="text-label">Instrument</th>
+            <th className="text-label">Retning</th>
+            <th className="text-label tallkol num-end">Størrelse (lot)</th>
+            <th className="text-label tallkol num-end">Inngang</th>
+            <th className="text-label tallkol num-end">Nå</th>
+            <th className="text-label tallkol num-end">Stop loss</th>
+            <th className="text-label tallkol num-end">Åpnet</th>
+            <th className="text-label tallkol num-end">Resultat (kr)</th>
           </tr>
         </thead>
         <tbody>
@@ -269,15 +269,15 @@ function Posisjon({ position }: { position: PositionView }) {
     <tr>
       <td>{position.bot}</td>
       <td>
-        <span className="merke">{position.badge}</span>
+        <span className="merke text-label">{position.badge}</span>
       </td>
       <td>{sideLabel(position.side)}</td>
-      <td className="tallkol tall-sm">{position.volume == null ? "Mangler" : formatNumber(position.volume, 2)}</td>
-      <td className="tallkol tall-sm">{position.entry == null ? "Mangler" : formatPrice(position.entry)}</td>
-      <td className="tallkol tall-sm">{position.mark == null ? "Mangler" : formatPrice(position.mark)}</td>
-      <td className="tallkol tall-sm">{position.stop == null ? "Mangler" : formatPrice(position.stop)}</td>
-      <td className="tallkol tall-sm">{position.opened ? formatClock(position.opened) : "Mangler"}</td>
-      <td className="tallkol tall-sm">
+      <td className="tallkol num-sm num-end">{position.volume == null ? "Mangler" : formatNumber(position.volume, 2)}</td>
+      <td className="tallkol num-sm num-end">{position.entry == null ? "Mangler" : formatPrice(position.entry)}</td>
+      <td className="tallkol num-sm num-end">{position.mark == null ? "Mangler" : formatPrice(position.mark)}</td>
+      <td className="tallkol num-sm num-end">{position.stop == null ? "Mangler" : formatPrice(position.stop)}</td>
+      <td className="tallkol num-sm num-end">{position.opened ? formatClock(position.opened) : "Mangler"}</td>
+      <td className="tallkol num-sm num-end">
         {position.profit == null ? (
           <span className="dempet">Åpen</span>
         ) : (
