@@ -1,0 +1,407 @@
+/* ============================================================
+   kold / tokens v5 (Jøkul-struktur) / 20.11.2026 / VEDTATT
+   Vedtatt 2026-11-20. To lag: primitiver (--kold-color-*) brukes ALDRI i komponenter.
+   Semantiske tokens (--kold-bg-*, -text-*, -icon-*, -border-*, -data-*, -result-*) bytter verdi med [data-theme].
+   Tekst-tokens er kun godkjent på flatene i forslag.md, tabell 5.
+   --kold-bg-stop / --kold-text-signal: kun nødstopp og varsler. #1884FC (--kold-bg-action-brand) bærer bare stor tekst.
+   Blå betyr aldri gevinst. Ingen glød, ingen gradienter utenom resultatkortets kornfade.
+   ============================================================ */
+:root {
+  /* Primitiver */
+  /* paper */
+  --kold-color-paper-0: #FFFFFF;
+  --kold-color-paper-50: #FAF9F6;
+  --kold-color-paper-100: #F6F5F1;
+  --kold-color-paper-200: #ECEAE2;
+  --kold-color-paper-250: #E6E4DD;
+  --kold-color-paper-300: #D5D2C9;
+  --kold-color-paper-400: #A89F94;
+  --kold-color-paper-500: #8A8478;
+  /* fjord */
+  --kold-color-fjord-400: #5C6B68;
+  --kold-color-fjord-500: #3A4F4D;
+  --kold-color-fjord-600: #2E4756;
+  --kold-color-fjord-700: #1F3B3A;
+  --kold-color-fjord-800: #152928;
+  /* night */
+  --kold-color-night-100: #C9CFD4;
+  --kold-color-night-300: #8E9AA6;
+  --kold-color-night-400: #6E7A87;
+  --kold-color-night-500: #354150;
+  --kold-color-night-600: #28323D;
+  --kold-color-night-700: #1E2730;
+  --kold-color-night-800: #161D24;
+  --kold-color-night-850: #12181E;
+  --kold-color-night-900: #0F1419;
+  /* blue */
+  --kold-color-blue-50: #F1F6FC;
+  --kold-color-blue-100: #E8F2FE;
+  --kold-color-blue-200: #C5DCF6;
+  --kold-color-blue-250: #B8D7FC;
+  --kold-color-blue-300: #8BB6EB;
+  --kold-color-blue-350: #6AABFD;
+  --kold-color-blue-400: #3897FD;
+  --kold-color-blue-500: #1884FC;
+  --kold-color-blue-600: #0D5EC4;
+  --kold-color-blue-700: #0A4C9F;
+  --kold-color-blue-750: #083D80;
+  --kold-color-blue-800: #1F4A7A;
+  --kold-color-blue-900: #14273D;
+  /* moss */
+  --kold-color-moss-50: #EAF2EC;
+  --kold-color-moss-400: #54A879;
+  --kold-color-moss-600: #36704F;
+  --kold-color-moss-700: #2E5F47;
+  --kold-color-moss-750: #234A38;
+  --kold-color-moss-800: #163328;
+  --kold-color-moss-900: #102119;
+  /* heather */
+  --kold-color-heather-400: #C77A8E;
+  --kold-color-heather-600: #8E4A5C;
+  --kold-color-heather-700: #7A4050;
+  --kold-color-heather-750: #5A3040;
+  --kold-color-heather-800: #3A2028;
+  --kold-color-heather-900: #25131A;
+  /* signal */
+  --kold-color-signal-50: #FBEEE8;
+  --kold-color-signal-400: #EE6A3A;
+  --kold-color-signal-500: #CC3D08;
+  --kold-color-signal-600: #B13406;
+  --kold-color-signal-700: #8B2A0C;
+  --kold-color-signal-750: #5C1E0A;
+  --kold-color-signal-800: #3A1408;
+  --kold-color-signal-900: #1A0903;
+  /* ash */
+  --kold-color-ash-700: #3D2A22;
+  --kold-color-ash-800: #2A1A14;
+  --kold-color-ash-850: #1C1410;
+  --kold-color-ash-900: #1A1210;
+  --kold-color-ash-950: #120E0C;
+  /* data */
+  --kold-color-data-glacier: #4A7C9B;
+  --kold-color-data-mist: #6C7D86;
+  --kold-color-data-sand: #A68A5B;
+  --kold-color-data-slate-violet: #5A5F7D;
+  --kold-color-data-slate-violet-light: #8C91B5;
+  --kold-color-data-glacier-blue: #4C95E8;
+  /* texture */
+  --kold-color-texture-coast: #3B86E0;
+  --kold-color-texture-haze: #6A93C4;
+  /* black */
+  --kold-color-black: #000000;
+
+  /* Semantisk, Light */
+  /* bg */
+  --kold-bg-page: var(--kold-color-paper-100);
+  --kold-bg-page-variant: var(--kold-color-paper-200);
+  --kold-bg-surface: var(--kold-color-paper-0);
+  --kold-bg-surface-low: var(--kold-color-paper-50);
+  --kold-bg-surface-high: var(--kold-color-paper-0);
+  --kold-bg-surface-inverted: var(--kold-color-night-900);
+  --kold-bg-action: var(--kold-color-blue-600);
+  --kold-bg-action-hover: var(--kold-color-blue-700);
+  --kold-bg-action-pressed: var(--kold-color-blue-750);
+  --kold-bg-action-brand: var(--kold-color-blue-500);
+  --kold-bg-action-secondary: var(--kold-color-paper-0);
+  --kold-bg-interactive-hover: var(--kold-color-paper-200);
+  --kold-bg-interactive-selected: var(--kold-color-blue-100);
+  --kold-bg-input: var(--kold-color-paper-0);
+  --kold-bg-input-focus: var(--kold-color-paper-0);
+  --kold-bg-disabled: var(--kold-color-paper-200);
+  --kold-bg-alert-info: var(--kold-color-blue-100);
+  --kold-bg-alert-success: var(--kold-color-moss-50);
+  --kold-bg-alert-signal: var(--kold-color-signal-50);
+  --kold-bg-stop: var(--kold-color-signal-500);
+  /* text */
+  --kold-text-default: var(--kold-color-night-900);
+  --kold-text-subdued: var(--kold-color-fjord-500);
+  --kold-text-helper: var(--kold-color-fjord-400);
+  --kold-text-inverted: var(--kold-color-paper-100);
+  --kold-text-on-action: var(--kold-color-paper-0);
+  --kold-text-on-action-brand: var(--kold-color-paper-0);
+  --kold-text-on-stop: var(--kold-color-paper-0);
+  --kold-text-on-alert: var(--kold-color-night-900);
+  --kold-text-interactive: var(--kold-color-blue-600);
+  --kold-text-interactive-hover: var(--kold-color-blue-700);
+  --kold-text-gain: var(--kold-color-moss-600);
+  --kold-text-loss: var(--kold-color-heather-600);
+  --kold-text-signal: var(--kold-color-signal-600);
+  --kold-text-disabled: var(--kold-color-paper-500);
+  /* icon */
+  --kold-icon-default: var(--kold-color-night-900);
+  --kold-icon-subdued: var(--kold-color-fjord-400);
+  --kold-icon-interactive: var(--kold-color-blue-600);
+  --kold-icon-on-action: var(--kold-color-paper-0);
+  /* border */
+  --kold-border-separator: var(--kold-color-paper-250);
+  --kold-border-separator-strong: var(--kold-color-paper-300);
+  --kold-border-input: var(--kold-color-paper-500);
+  --kold-border-input-focus: var(--kold-color-blue-500);
+  --kold-border-selected: var(--kold-color-blue-250);
+  --kold-border-focus-ring: var(--kold-color-blue-500);
+  --kold-border-signal: var(--kold-color-signal-500);
+  /* data */
+  --kold-data-series-1: var(--kold-color-blue-500);
+  --kold-data-series-2: var(--kold-color-data-glacier);
+  --kold-data-reference: var(--kold-color-data-mist);
+  --kold-data-series-4: var(--kold-color-data-sand);
+  --kold-data-series-5: var(--kold-color-data-slate-violet);
+  --kold-data-gain: var(--kold-color-moss-600);
+  --kold-data-loss: var(--kold-color-heather-600);
+  --kold-data-grid: var(--kold-color-paper-200);
+  --kold-data-zero-line: var(--kold-color-paper-300);
+  /* resultatkort */
+  --kold-result-stable-from: var(--kold-color-paper-300);
+  --kold-result-stable-mid: var(--kold-color-paper-200);
+  --kold-result-stable-to: var(--kold-color-paper-100);
+  --kold-result-stable-text: var(--kold-color-night-900);
+  --kold-result-stable-text-subdued: var(--kold-color-fjord-500);
+  --kold-result-stable-graph: var(--kold-color-night-900);
+  --kold-result-stable-reference: var(--kold-color-fjord-500);
+  --kold-result-gain-from: var(--kold-color-moss-800);
+  --kold-result-gain-mid: var(--kold-color-moss-750);
+  --kold-result-gain-to: var(--kold-color-moss-700);
+  --kold-result-gain-coast: var(--kold-color-moss-900);
+  --kold-result-gain-text: var(--kold-color-paper-100);
+  --kold-result-gain-text-subdued: var(--kold-color-paper-250);
+  --kold-result-gain-graph: var(--kold-color-paper-100);
+  --kold-result-gain-reference: var(--kold-color-paper-300);
+  --kold-result-loss-from: var(--kold-color-heather-800);
+  --kold-result-loss-mid: var(--kold-color-heather-750);
+  --kold-result-loss-to: var(--kold-color-heather-700);
+  --kold-result-loss-coast: var(--kold-color-heather-900);
+  --kold-result-loss-text: var(--kold-color-paper-100);
+  --kold-result-loss-text-subdued: var(--kold-color-paper-250);
+  --kold-result-loss-graph: var(--kold-color-paper-100);
+  --kold-result-loss-reference: var(--kold-color-paper-300);
+  --kold-result-megaloss-from: var(--kold-color-signal-800);
+  --kold-result-megaloss-mid: var(--kold-color-signal-750);
+  --kold-result-megaloss-to: var(--kold-color-signal-700);
+  --kold-result-megaloss-coast: var(--kold-color-signal-900);
+  --kold-result-megaloss-text: var(--kold-color-paper-100);
+  --kold-result-megaloss-text-subdued: var(--kold-color-paper-250);
+  --kold-result-megaloss-graph: var(--kold-color-paper-100);
+  --kold-result-megaloss-reference: var(--kold-color-paper-300);
+  --kold-result-broke-from: var(--kold-color-ash-950);
+  --kold-result-broke-mid: var(--kold-color-ash-850);
+  --kold-result-broke-to: var(--kold-color-ash-800);
+  --kold-result-broke-coast: var(--kold-color-black);
+  --kold-result-broke-text: var(--kold-color-paper-100);
+  --kold-result-broke-text-subdued: var(--kold-color-paper-300);
+  --kold-result-broke-graph: var(--kold-color-paper-250);
+  --kold-result-broke-reference: var(--kold-color-paper-400);
+  --kold-result-coast-opacity: 0.26;
+  --kold-result-dark-texture-opacity: 0;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  /* Semantisk, Dark */
+  /* bg */
+  --kold-bg-page: var(--kold-color-night-900);
+  --kold-bg-page-variant: var(--kold-color-night-700);
+  --kold-bg-surface: var(--kold-color-night-800);
+  --kold-bg-surface-low: var(--kold-color-night-850);
+  --kold-bg-surface-high: var(--kold-color-night-700);
+  --kold-bg-surface-inverted: var(--kold-color-paper-100);
+  --kold-bg-action: var(--kold-color-blue-500);
+  --kold-bg-action-hover: var(--kold-color-blue-400);
+  --kold-bg-action-pressed: var(--kold-color-blue-350);
+  --kold-bg-action-brand: var(--kold-color-blue-500);
+  --kold-bg-action-secondary: var(--kold-color-night-800);
+  --kold-bg-interactive-hover: var(--kold-color-night-700);
+  --kold-bg-interactive-selected: var(--kold-color-blue-900);
+  --kold-bg-input: var(--kold-color-night-850);
+  --kold-bg-input-focus: var(--kold-color-night-800);
+  --kold-bg-disabled: var(--kold-color-night-700);
+  --kold-bg-alert-info: var(--kold-color-blue-900);
+  --kold-bg-alert-success: var(--kold-color-moss-900);
+  --kold-bg-alert-signal: var(--kold-color-ash-800);
+  --kold-bg-stop: var(--kold-color-signal-500);
+  /* text */
+  --kold-text-default: var(--kold-color-paper-100);
+  --kold-text-subdued: var(--kold-color-night-100);
+  --kold-text-helper: var(--kold-color-night-300);
+  --kold-text-inverted: var(--kold-color-night-900);
+  --kold-text-on-action: var(--kold-color-night-900);
+  --kold-text-on-action-brand: var(--kold-color-night-900);
+  --kold-text-on-stop: var(--kold-color-paper-0);
+  --kold-text-on-alert: var(--kold-color-paper-100);
+  --kold-text-interactive: var(--kold-color-blue-400);
+  --kold-text-interactive-hover: var(--kold-color-blue-300);
+  --kold-text-gain: var(--kold-color-moss-400);
+  --kold-text-loss: var(--kold-color-heather-400);
+  --kold-text-signal: var(--kold-color-signal-400);
+  --kold-text-disabled: var(--kold-color-night-400);
+  /* icon */
+  --kold-icon-default: var(--kold-color-paper-100);
+  --kold-icon-subdued: var(--kold-color-night-300);
+  --kold-icon-interactive: var(--kold-color-blue-400);
+  --kold-icon-on-action: var(--kold-color-night-900);
+  /* border */
+  --kold-border-separator: var(--kold-color-night-600);
+  --kold-border-separator-strong: var(--kold-color-night-500);
+  --kold-border-input: var(--kold-color-night-400);
+  --kold-border-input-focus: var(--kold-color-blue-400);
+  --kold-border-selected: var(--kold-color-blue-800);
+  --kold-border-focus-ring: var(--kold-color-blue-400);
+  --kold-border-signal: var(--kold-color-signal-400);
+  /* data */
+  --kold-data-series-1: var(--kold-color-blue-500);
+  --kold-data-series-2: var(--kold-color-data-glacier);
+  --kold-data-reference: var(--kold-color-data-mist);
+  --kold-data-series-4: var(--kold-color-data-sand);
+  --kold-data-series-5: var(--kold-color-data-slate-violet-light);
+  --kold-data-gain: var(--kold-color-moss-400);
+  --kold-data-loss: var(--kold-color-heather-400);
+  --kold-data-grid: var(--kold-color-night-700);
+  --kold-data-zero-line: var(--kold-color-night-500);
+  /* resultatkort */
+  --kold-result-stable-from: var(--kold-color-night-800);
+  --kold-result-stable-mid: var(--kold-color-night-700);
+  --kold-result-stable-to: var(--kold-color-night-600);
+  --kold-result-stable-text: var(--kold-color-paper-100);
+  --kold-result-stable-text-subdued: var(--kold-color-night-100);
+  --kold-result-stable-graph: var(--kold-color-paper-100);
+  --kold-result-stable-reference: var(--kold-color-night-300);
+  --kold-result-gain-from: var(--kold-color-moss-800);
+  --kold-result-gain-mid: var(--kold-color-moss-750);
+  --kold-result-gain-to: var(--kold-color-moss-700);
+  --kold-result-gain-coast: var(--kold-color-moss-900);
+  --kold-result-gain-text: var(--kold-color-paper-100);
+  --kold-result-gain-text-subdued: var(--kold-color-paper-250);
+  --kold-result-gain-graph: var(--kold-color-paper-100);
+  --kold-result-gain-reference: var(--kold-color-paper-300);
+  --kold-result-loss-from: var(--kold-color-heather-800);
+  --kold-result-loss-mid: var(--kold-color-heather-750);
+  --kold-result-loss-to: var(--kold-color-heather-700);
+  --kold-result-loss-coast: var(--kold-color-heather-900);
+  --kold-result-loss-text: var(--kold-color-paper-100);
+  --kold-result-loss-text-subdued: var(--kold-color-paper-250);
+  --kold-result-loss-graph: var(--kold-color-paper-100);
+  --kold-result-loss-reference: var(--kold-color-paper-300);
+  --kold-result-megaloss-from: var(--kold-color-signal-800);
+  --kold-result-megaloss-mid: var(--kold-color-signal-750);
+  --kold-result-megaloss-to: var(--kold-color-signal-700);
+  --kold-result-megaloss-coast: var(--kold-color-signal-900);
+  --kold-result-megaloss-text: var(--kold-color-paper-100);
+  --kold-result-megaloss-text-subdued: var(--kold-color-paper-250);
+  --kold-result-megaloss-graph: var(--kold-color-paper-100);
+  --kold-result-megaloss-reference: var(--kold-color-paper-300);
+  --kold-result-broke-from: var(--kold-color-ash-900);
+  --kold-result-broke-mid: var(--kold-color-ash-800);
+  --kold-result-broke-to: var(--kold-color-ash-700);
+  --kold-result-broke-coast: var(--kold-color-black);
+  --kold-result-broke-text: var(--kold-color-paper-100);
+  --kold-result-broke-text-subdued: var(--kold-color-paper-300);
+  --kold-result-broke-graph: var(--kold-color-paper-250);
+  --kold-result-broke-reference: var(--kold-color-paper-400);
+  --kold-result-dark-texture-opacity: 1;
+  color-scheme: dark;
+}
+
+/* Følg systemet når data-theme mangler */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    /* bg */
+    --kold-bg-page: var(--kold-color-night-900);
+    --kold-bg-page-variant: var(--kold-color-night-700);
+    --kold-bg-surface: var(--kold-color-night-800);
+    --kold-bg-surface-low: var(--kold-color-night-850);
+    --kold-bg-surface-high: var(--kold-color-night-700);
+    --kold-bg-surface-inverted: var(--kold-color-paper-100);
+    --kold-bg-action: var(--kold-color-blue-500);
+    --kold-bg-action-hover: var(--kold-color-blue-400);
+    --kold-bg-action-pressed: var(--kold-color-blue-350);
+    --kold-bg-action-brand: var(--kold-color-blue-500);
+    --kold-bg-action-secondary: var(--kold-color-night-800);
+    --kold-bg-interactive-hover: var(--kold-color-night-700);
+    --kold-bg-interactive-selected: var(--kold-color-blue-900);
+    --kold-bg-input: var(--kold-color-night-850);
+    --kold-bg-input-focus: var(--kold-color-night-800);
+    --kold-bg-disabled: var(--kold-color-night-700);
+    --kold-bg-alert-info: var(--kold-color-blue-900);
+    --kold-bg-alert-success: var(--kold-color-moss-900);
+    --kold-bg-alert-signal: var(--kold-color-ash-800);
+    --kold-bg-stop: var(--kold-color-signal-500);
+    /* text */
+    --kold-text-default: var(--kold-color-paper-100);
+    --kold-text-subdued: var(--kold-color-night-100);
+    --kold-text-helper: var(--kold-color-night-300);
+    --kold-text-inverted: var(--kold-color-night-900);
+    --kold-text-on-action: var(--kold-color-night-900);
+    --kold-text-on-action-brand: var(--kold-color-night-900);
+    --kold-text-on-stop: var(--kold-color-paper-0);
+    --kold-text-on-alert: var(--kold-color-paper-100);
+    --kold-text-interactive: var(--kold-color-blue-400);
+    --kold-text-interactive-hover: var(--kold-color-blue-300);
+    --kold-text-gain: var(--kold-color-moss-400);
+    --kold-text-loss: var(--kold-color-heather-400);
+    --kold-text-signal: var(--kold-color-signal-400);
+    --kold-text-disabled: var(--kold-color-night-400);
+    /* icon */
+    --kold-icon-default: var(--kold-color-paper-100);
+    --kold-icon-subdued: var(--kold-color-night-300);
+    --kold-icon-interactive: var(--kold-color-blue-400);
+    --kold-icon-on-action: var(--kold-color-night-900);
+    /* border */
+    --kold-border-separator: var(--kold-color-night-600);
+    --kold-border-separator-strong: var(--kold-color-night-500);
+    --kold-border-input: var(--kold-color-night-400);
+    --kold-border-input-focus: var(--kold-color-blue-400);
+    --kold-border-selected: var(--kold-color-blue-800);
+    --kold-border-focus-ring: var(--kold-color-blue-400);
+    --kold-border-signal: var(--kold-color-signal-400);
+    /* data */
+    --kold-data-series-1: var(--kold-color-blue-500);
+    --kold-data-series-2: var(--kold-color-data-glacier);
+    --kold-data-reference: var(--kold-color-data-mist);
+    --kold-data-series-4: var(--kold-color-data-sand);
+    --kold-data-series-5: var(--kold-color-data-slate-violet-light);
+    --kold-data-gain: var(--kold-color-moss-400);
+    --kold-data-loss: var(--kold-color-heather-400);
+    --kold-data-grid: var(--kold-color-night-700);
+    --kold-data-zero-line: var(--kold-color-night-500);
+    /* resultatkort */
+    --kold-result-stable-from: var(--kold-color-night-800);
+    --kold-result-stable-mid: var(--kold-color-night-700);
+    --kold-result-stable-to: var(--kold-color-night-600);
+    --kold-result-stable-text: var(--kold-color-paper-100);
+    --kold-result-stable-text-subdued: var(--kold-color-night-100);
+    --kold-result-stable-graph: var(--kold-color-paper-100);
+    --kold-result-stable-reference: var(--kold-color-night-300);
+    --kold-result-gain-from: var(--kold-color-moss-800);
+    --kold-result-gain-mid: var(--kold-color-moss-750);
+    --kold-result-gain-to: var(--kold-color-moss-700);
+    --kold-result-gain-coast: var(--kold-color-moss-900);
+    --kold-result-gain-text: var(--kold-color-paper-100);
+    --kold-result-gain-text-subdued: var(--kold-color-paper-250);
+    --kold-result-gain-graph: var(--kold-color-paper-100);
+    --kold-result-gain-reference: var(--kold-color-paper-300);
+    --kold-result-loss-from: var(--kold-color-heather-800);
+    --kold-result-loss-mid: var(--kold-color-heather-750);
+    --kold-result-loss-to: var(--kold-color-heather-700);
+    --kold-result-loss-coast: var(--kold-color-heather-900);
+    --kold-result-loss-text: var(--kold-color-paper-100);
+    --kold-result-loss-text-subdued: var(--kold-color-paper-250);
+    --kold-result-loss-graph: var(--kold-color-paper-100);
+    --kold-result-loss-reference: var(--kold-color-paper-300);
+    --kold-result-megaloss-from: var(--kold-color-signal-800);
+    --kold-result-megaloss-mid: var(--kold-color-signal-750);
+    --kold-result-megaloss-to: var(--kold-color-signal-700);
+    --kold-result-megaloss-coast: var(--kold-color-signal-900);
+    --kold-result-megaloss-text: var(--kold-color-paper-100);
+    --kold-result-megaloss-text-subdued: var(--kold-color-paper-250);
+    --kold-result-megaloss-graph: var(--kold-color-paper-100);
+    --kold-result-megaloss-reference: var(--kold-color-paper-300);
+    --kold-result-broke-from: var(--kold-color-ash-900);
+    --kold-result-broke-mid: var(--kold-color-ash-800);
+    --kold-result-broke-to: var(--kold-color-ash-700);
+    --kold-result-broke-coast: var(--kold-color-black);
+    --kold-result-broke-text: var(--kold-color-paper-100);
+    --kold-result-broke-text-subdued: var(--kold-color-paper-300);
+    --kold-result-broke-graph: var(--kold-color-paper-250);
+    --kold-result-broke-reference: var(--kold-color-paper-400);
+    color-scheme: dark;
+  }
+}
